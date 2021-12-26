@@ -4,7 +4,12 @@
     "module": "commonjs",
     "declaration": true,
     "outDir": "./lib",
-    "strict": true
+    "strict": true,
+    "downlevelIteration": true,
+    "baseUrl": ".",
+    "paths": {
+      "kaplan-meier/js": ["typings/kaplan-meier/js"]
+    }
   },
   "include": ["src"],
   "exclude": ["node_modules", "**/__tests__/*"]
