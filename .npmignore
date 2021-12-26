@@ -1,0 +1,5 @@
+.eslintignore
+.eslintrc.js
+.npmignore
+jest.config.json
+tsconfig.json
