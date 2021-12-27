@@ -1,4 +1,4 @@
-import { groupBy, sortBy } from 'lodash';
+import { groupBy, sortBy } from 'underscore';
 
 export interface kaplanMeierEsimatorResult {
 	rate: number;

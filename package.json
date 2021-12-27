@@ -1,9 +1,11 @@
 {
   "name": "kaplan-meier-estimator",
   "version": "0.1.0",
+  "type": "module",
   "description": "Kaplan-Meier-Estimator also known as the product limit estimator.",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "main": "lib/kaplan-meier-estimator.esm.js",
+  "browser": "lib/kaplan-meier-estimator.umd.js",
+  "types": "lib/kaplan-meier-estimator.d.ts",
   "files": [
     "lib/**/*"
   ],
@@ -12,7 +14,8 @@
     "test:watch": "jest --watch",
     "lint": "eslint ./src",
     "format": "prettier --write ./src",
-    "build": "tsc",
+    "clean": "rimraf ./lib",
+    "build": "npm run clean && rollup -c",
     "prepare": "npm run build",
     "prepublishOnly": "npm test && npm run lint",
     "preversion": "npm run lint",
@@ -33,16 +36,25 @@
   "prettier": "@fullstax/prettier-config",
   "devDependencies": {
     "@fullstax/prettier-config": "^1.0.1",
+    "@rollup/plugin-commonjs": "^21.0.1",
+    "@rollup/plugin-node-resolve": "^13.1.1",
+    "@rollup/plugin-typescript": "^8.3.0",
     "@types/jest": "^27.0.3",
-    "@types/lodash": "^4.14.178",
+    "@types/underscore": "^1.11.4",
     "@typescript-eslint/eslint-plugin": "^5.8.0",
     "@typescript-eslint/parser": "^5.8.0",
     "eslint": "^8.5.0",
     "jest": "^27.4.5",
     "kaplan-meier": "^1.1.0",
-    "lodash": "^4.17.21",
     "prettier": "^2.5.1",
+    "rollup": "^2.62.0",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
     "ts-jest": "^27.1.2",
-    "typescript": "^4.5.4"
+    "typescript": "^4.5.4",
+    "underscore": "^1.13.2"
+  },
+  "dependencies": {},
+  "peerDependencies": {
+    "underscore": "^1"
   }
 }
