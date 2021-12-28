@@ -1,17 +1,18 @@
 {
-  "compilerOptions": {
-    "target": "esnext",
-    "module": "esnext",
-    "declaration": true,
-    "outDir": "./lib",
-    "strict": true,
-    "downlevelIteration": true,
-    "esModuleInterop": true,
-    "baseUrl": ".",
-    "paths": {
-      "kaplan-meier/js": ["typings/kaplan-meier/js"]
-    }
-  },
-  "include": ["src"],
-  "exclude": ["node_modules", "**/__tests__/*"]
+	"compilerOptions": {
+		"target": "esnext",
+		"module": "esnext",
+		"declaration": true,
+		"outDir": "./lib",
+		"strict": true,
+		"downlevelIteration": true,
+		"esModuleInterop": true,
+		"moduleResolution": "node",
+		"baseUrl": ".",
+		"paths": {
+			"kaplan-meier/js": ["typings/kaplan-meier"]
+		}
+	},
+	"include": ["src"],
+	"exclude": ["node_modules", "**/__tests__/*"]
 }

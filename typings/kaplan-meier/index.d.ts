@@ -1,11 +1,3 @@
-/**
- * @author Alexander Wunschik <alexander.wunschik@fullstax.de>
- * @author Nico Koenig <nico.koenig@fullstax.de>
- * @author Joanna Surzyn <joanna.surzyn@fullstax.de>
- * @copyright © Siemens Healthcare GmbH, 2019-2021 All Rights Reserved
- */
-
-// TODO: #686 - package typings
 declare module 'kaplan-meier/js' {
 	export interface KaplanMeierData {
 		d: number;

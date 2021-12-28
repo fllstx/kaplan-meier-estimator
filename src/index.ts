@@ -1,4 +1,9 @@
-import { groupBy, sortBy } from 'underscore';
+import { groupBy, sortBy, uniq } from './helpers';
+
+interface kaplanMeierEsimatorData {
+	tte: number;
+	ev: boolean;
+}
 
 export interface kaplanMeierEsimatorResult {
 	rate: number;
@@ -30,24 +35,27 @@ interface TimeTableData {
  */
 function timeTable(tte: number[], ev: boolean[]): TimeTableData[] {
 	// sort and collate
-	const exits = sortBy(
+	const exits: kaplanMeierEsimatorData[] = sortBy(
 		tte.map((x, i) => ({ tte: x, ev: ev[i] })),
 		'tte'
 	);
 
 	// unique tte
-	const uniqExits = Array.from(new Set(tte));
+	const uniqTtes = uniq<number>(tte);
 
 	// group by common time of exit
-	const gexits = groupBy(exits, x => x.tte);
+	const groupedTtes = groupBy<kaplanMeierEsimatorData, number>(
+		exits,
+		(x: kaplanMeierEsimatorData) => x.tte
+	);
 
 	const firstEntry = { n: exits.length, e: 0 };
 
 	// compute d_i, n_i for times t_i (including censor times)
-	const result = uniqExits.reduce(function (a: TimeTableData[], tte) {
-		const group = gexits[tte];
+	const result = uniqTtes.reduce((a: TimeTableData[], tte: number) => {
+		const group = groupedTtes[tte];
 		const l: TimeTableData = a.length ? a[a.length - 1] : firstEntry;
-		const events = group.filter(x => x.ev);
+		const events = group.filter((x: kaplanMeierEsimatorData) => x.ev);
 
 		const n = l.n - l.e;
 
