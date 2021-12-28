@@ -1,40 +1,237 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>kaplan-meier-estimator</title>
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>kaplan-meier-estimator</title>
 
-	<script src="https://unpkg.com/papaparse" async></script>
-	<script src="/lib/index.browser.js" async></script>
-</head>
-<body>
-	<h1>kaplan-meier-estimator</h1>
-	<script type="text/javascript">
-		async function loadData(url) {
-			return new Promise((resolve, reject) => {
-				Papa.parse(url, {
-					header: true,
-					dynamicTyping: true,
-					download: true,
-					complete: function(results) {
-						if (results.errors.length) {
-							reject(results.errors);
-						} else {
-							resolve(results.data);
-						};
-					}
+		<script src="https://unpkg.com/papaparse" async></script>
+		<script src="https://cdn.plot.ly/plotly-2.8.3.min.js" async></script>
+
+		<script src="./lib/kaplan-meier-estimator.iife.js" async></script>
+
+		<link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css" />
+		<style>
+			header.container {
+				padding-bottom: 0;
+			}
+			main.container {
+				padding-top: 0;
+				padding-bottom: 0;
+			}
+			footer.container {
+				padding-top: 0;
+			}
+			#github-ribbon {
+				position: absolute;
+				top: 0;
+				right: 0;
+			}
+
+			code {
+				margin-bottom: 2rem;
+			}
+		</style>
+	</head>
+	<body>
+		<header class="container">
+			<hgroup>
+				<h1>kaplan-meier-estimator</h1>
+				<p>
+					A JavaScript implementation of the
+					<a href="https://en.wikipedia.org/wiki/Kaplan%E2%80%93Meier_estimator"
+						>Kaplan–Meier estimator</a
+					>
+					algorithm.
+				</p>
+			</hgroup>
+		</header>
+		<main class="container">
+			<article>
+				<h2>Usage</h2>
+				<section id="usage-install">
+					<h3>Installation</h3>
+					<h5>node</h5>
+					<code> npm install --save kaplan-meier-estimator </code>
+					<h5>browser</h5>
+					<code>
+						&lt;script
+						src=&quot;https://unpkg.com/kaplan-meier-estimator@latest/lib/kaplan-meier-estimator.iife.js&quot;&gt;
+					</code>
+				</section>
+				<section id="usage-node">
+					<h3>node usage</h3>
+					<code data-lang="javascript">
+						import { kaplanMeierEstimator } from 'kaplan-meier-estimator';<br />
+						<br />
+						const events = [1, 12, 22, 29, 31, …];<br />
+						const censored = [false, true, false, true, true, …];<br />
+						<br />
+						const kmData = kaplanMeierEstimator(events, censored)<br />
+						<br />
+						consol.dir(kmData);
+					</code>
+					
+					<h3>browser usage</h3>
+					<code data-lang="javascript">
+						const events = [1, 12, 22, 29, 31, …];<br />
+						const censored = [false, true, false, true, true, …];<br />
+						<br />
+						const kmData = KME.kaplanMeierEsimator((events, censored)<br />
+						<br />
+						consol.dir(kmData);
+					</code>
+					
+					<h4>Result</h5>
+					<code data-lang="terminal" data-theme="dark">
+						0: {rate: 1, time: 1}<br>
+						1: {rate: 0.9285714285714286, time: 12}<br>
+						2: {rate: 0.9285714285714286, time: 22}<br>
+						3: {rate: 0.8511904761904762, time: 29}<br>
+						4: {rate: 0.7738095238095237, time: 31}<br>
+						…<br>
+					</code>
+				</section>
+			</article>
+			<article>
+				<h2>Example</h2>
+
+				<section id="example-description">
+					<p>
+						This example is based on the
+						<a href="https://de.wikipedia.org/wiki/Kaplan-Meier-Sch%C3%A4tzer"
+							>German Wikipedia article "Kaplan-Meier-Schätzer"</a
+						>.
+					</p>
+				</section>
+
+				<section id="example-plot">
+					<h2>plot</h2>
+					<div id="wikipedia_plot"><progress id="progress-2"></progress></div>
+				</section>
+
+				<section id="example-data">
+					<h2>data</h2>
+					<table id="wikipedia_data">
+						<thead>
+							<tr>
+								<td colspan="2"><progress id="progress-2"></progress></td>
+							</tr>
+						</thead>
+						<tbody></tbody>
+					</table>
+					<p><a href="./src/__tests__/wikipedia_example.csv">Download source-data as csv</a></p>
+				</section>
+			</article>
+		</main>
+		<footer class="container">
+			<a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> by
+			<a href="https://www.fullstax.de">fullstax GmbH & CO. KG</a>.
+		</footer>
+
+		<a href="https://github.com/mojoaxel/kaplan-meier-estimator" id="github-ribbon">
+			<img
+				loading="lazy"
+				width="149"
+				height="149"
+				src="https://github.blog/wp-content/uploads/2008/12/forkme_right_white_ffffff.png?resize=149%2C149"
+				class="attachment-full size-full"
+				alt="Fork me on GitHub"
+				data-recalc-dims="1"
+			/>
+		</a>
+
+		<script type="text/javascript">
+			async function loadData(url) {
+				return new Promise((resolve, reject) => {
+					Papa.parse(url, {
+						header: true,
+						dynamicTyping: true,
+						download: true,
+						complete: function (results) {
+							if (results.errors.length) {
+								reject(results.errors);
+							} else {
+								resolve(results.data);
+							}
+						}
+					});
 				});
-			});
-		}
+			}
 
-		window.onload = async function() {
-			const data = await loadData("/src/__tests__/wikipedia_example.csv");
-			console.log(data);
+			function fillTable(sourceData, kmeData) {
+				const $table = document.getElementById('wikipedia_data');
+				const $thead = $table.querySelector('thead');
+				$thead.innerHTML = `<tr>
+				<th>event</th>
+				<th>censored</th>
+				<th>rate</th>
+			</tr>`;
 
+				const $tbody = $table.querySelector('tbody');
+				const rows = [];
+				for (let i = 0; i < sourceData.length; i++) {
+					const rowData = sourceData[i];
+					const kmeRowData = kmeData.find(d => d.time === rowData.events);
+					const $row = document.createElement('tr');
+					$row.innerHTML = `
+					<td>${rowData.events}</td>
+					<td>${rowData.censores}</td>
+					<td>${rowData.censores ? kmeRowData.rate.toFixed(3) : ''}</td>
+				`;
+					rows.push($row);
+				}
+				$tbody.innerHTML = '';
 
-		}
-	</script>
-</body>
+				rows.forEach($row => $tbody.appendChild($row));
+			}
+
+			function drawWikipediaChart(data) {
+				var trace = {
+					x: data.map(d => d.time),
+					y: data.map(d => d.rate),
+					type: 'scatter',
+					line: {
+						color: 'red',
+						width: 1,
+						shape: 'hv'
+					},
+					marker: {
+						color: '#000',
+						size: 6,
+						symbol: 'cross'
+					}
+				};
+				var data = [trace];
+				const layout = {
+					title: 'Kaplan-Meier-Estimator',
+					xaxis: {
+						title: 'time'
+					},
+					yaxis: {
+						title: 'rate',
+						range: [0, 1.1]
+					}
+				};
+
+				document.getElementById('wikipedia_plot').innerHTML = '';
+				Plotly.newPlot('wikipedia_plot', data, layout);
+			}
+
+			window.onload = async function () {
+				const sourceData = await loadData('./src/__tests__/wikipedia_example.csv');
+				console.dir(sourceData);
+
+				const kmeData = KME.kaplanMeierEsimator(
+					sourceData.map(d => d.events),
+					sourceData.map(d => d.censores)
+				);
+				console.dir(kmeData);
+
+				fillTable(sourceData, kmeData);
+				drawWikipediaChart(kmeData);
+			};
+		</script>
+	</body>
 </html>
