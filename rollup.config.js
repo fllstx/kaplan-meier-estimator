@@ -16,7 +16,7 @@ export default [
 			{
 				file: packageJson.browser,
 				name: 'KME',
-				format: 'umd',
+				format: 'iife',
 				sourcemap: true
 			}
 		],

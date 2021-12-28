@@ -4,7 +4,7 @@
   "type": "module",
   "description": "Kaplan-Meier-Estimator also known as the product limit estimator.",
   "main": "lib/kaplan-meier-estimator.esm.js",
-  "browser": "lib/kaplan-meier-estimator.umd.js",
+  "browser": "lib/kaplan-meier-estimator.iife.js",
   "types": "lib/kaplan-meier-estimator.d.ts",
   "files": [
     "lib/**/*"
