@@ -1,6 +1,6 @@
 {
   "name": "kaplan-meier-estimator",
-	"description": "Kaplan-Meier-Estimator also known as the product limit estimator.",
+  "description": "Kaplan-Meier-Estimator also known as the product limit estimator.",
   "version": "0.2.0",
   "author": "fullstax Gmbh & Co. KG <dev@fullstax.de>",
   "contributors": [
@@ -11,17 +11,17 @@
   ],
   "license": "Apache-2.0",
   "type": "module",
-  "main": "lib/kaplan-meier-estimator.esm.js",
+  "main": "lib/index.js",
   "browser": "lib/kaplan-meier-estimator.iife.js",
-  "types": "lib/kaplan-meier-estimator.d.ts",
+  "types": "lib/index.d.ts",
   "files": [
     "lib/**/*"
   ],
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
-    "lint": "npm run lint:package . && npm run lint:eslint",
-    "lint:package": "npmPkgJsonLint",
+    "lint": "npm run lint:package && npm run lint:eslint",
+    "lint:package": "npmPkgJsonLint .",
     "lint:eslint": "eslint ./src",
     "format": "prettier --write .",
     "clean": "rimraf ./lib",
@@ -61,7 +61,9 @@
     "papaparse": "^5.3.1",
     "prettier": "^2.5.1",
     "rollup": "^2.62.0",
+    "rollup-plugin-typescript2": "^0.31.1",
     "ts-jest": "^27.1.2",
+    "tslib": "^2.3.1",
     "typescript": "^4.5.4"
   },
   "dependencies": {},

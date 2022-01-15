@@ -10,7 +10,7 @@ export interface KaplanMeierEsimatorResult {
 	time: number;
 }
 
-export interface KaplanMeierResultData {
+interface KaplanMeierResultData {
 	d?: number;
 	e?: boolean;
 	n?: number;
@@ -86,14 +86,17 @@ export function init(lodashFunctions: {
 }
 
 /**
- * See http://en.wikipedia.org/wiki/Kaplan%E2%80%93Meier_estimator
+ * @see http://en.wikipedia.org/wiki/Kaplan%E2%80%93Meier_estimator
  *
- * tte  time to exit (event or censor)
- *  ev   is truthy if there is an event.
+ * @export
+ * @param {number[]} events time to exit (event or censor).
+ * @param {boolean[]} censors is truthy if there is an event.
+ * @returns {KaplanMeierEsimatorResult[]}
  */
 export function compute(events: number[], censors: boolean[]): KaplanMeierEsimatorResult[] {
-	if (events.length !== censors.length)
+	if (events.length !== censors.length) {
 		throw new Error('[kaplan-meier-esimator]: events and censors must be of same length');
+	}
 
 	const dini: TimeTableData[] = timeTable(events, censors);
 
@@ -102,13 +105,11 @@ export function compute(events: number[], censors: boolean[]): KaplanMeierEsimat
 		t: 0
 	};
 
-	// s : the survival rate from t=0 to the particular time (i.e. the
-	//     end of the time interval)
-	// rate : the chance of an event happened within the time interval (as in t
-	//     and the previous t with an event)
+	// s : the survival rate from t=0 to the particular time (i.e. the end of the time interval)
+	// rate : the chance of an event happened within the time interval (as in t and the previous t with an event)
 	const result: KaplanMeierResultData[] = dini.reduce(
 		(a: KaplanMeierResultData[], dn: TimeTableData) => {
-			// survival at each t_i (including censor times)
+			// survival at each t[i] (including censor times)
 			const l: KaplanMeierResultData = a.length ? a[a.length - 1] : firstEntry;
 
 			if (dn.d) {
