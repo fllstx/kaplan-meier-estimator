@@ -27,6 +27,23 @@ interface TimeTableData {
 }
 
 /**
+ * @interface KaplanMeierLodashHelpers
+ *
+ * This interface is used as the parameters for the init funktion.
+ * This is a leftover from the original implementation and will be removed in the future.
+ *
+ * @deprecated
+ */
+interface KaplanMeierLodashHelpers {
+	pluck?: unknown;
+	uniq?: unknown;
+	sortBy?: unknown;
+	groupBy?: unknown;
+	last?: unknown;
+	find?: unknown;
+}
+
+/**
  * Compute at-risk, exiting, and deaths for each time t[i], from a list of events.
  *
  * @param {number[]} tte time to exit (event or censor).
@@ -71,18 +88,24 @@ function timeTable(tte: number[], ev: boolean[]): TimeTableData[] {
 	return result;
 }
 
-export function init(lodashFunctions: {
-	pluck?: unknown;
-	uniq?: unknown;
-	sortBy?: unknown;
-	groupBy?: unknown;
-	last?: unknown;
-	find?: unknown;
-}) {
-	if (!lodashFunctions)
-		return {
-			compute
-		};
+/**
+ * This init function is a leftover from the original implementation
+ * inthe "kaplan-meier" library and will be removed in the future.
+ *
+ * @deprecated
+ *
+ * @export
+ * @param {KaplanMeierLodashHelpers} [lodashFunctions]
+ * @returns
+ */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function init(lodashFunctions?: KaplanMeierLodashHelpers) {
+	console.warn(
+		`[kaplan-meier-estimator] the "init" function is deprecated. It will be remove in the future!`
+	);
+	return {
+		compute
+	};
 }
 
 /**
@@ -113,7 +136,7 @@ export function compute(events: number[], censors: boolean[]): KaplanMeierEsimat
 			const l: KaplanMeierResultData = a.length ? a[a.length - 1] : firstEntry;
 
 			if (dn.d) {
-				// there were events at this t_i
+				// there were events at this t[i]
 				a.push({
 					t: dn.t || 0,
 					e: true,
