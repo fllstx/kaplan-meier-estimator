@@ -1,9 +1,13 @@
 {
-  "name": "kaplan-meier-estimator",
+  "name": "@fullstax/kaplan-meier-estimator",
   "description": "Kaplan-Meier-Estimator also known as the product limit estimator.",
   "version": "0.2.0",
   "author": "fullstax Gmbh & Co. KG <dev@fullstax.de>",
   "contributors": [
+    {
+      "name": "Alexander Wunschik",
+      "url": "https://github.com/mojoaxel"
+    },
     {
       "name": "Brian Craft",
       "url": "https://github.com/acthp"
@@ -12,10 +16,12 @@
   "license": "Apache-2.0",
   "type": "module",
   "main": "lib/index.js",
-  "browser": "lib/kaplan-meier-estimator.iife.js",
   "types": "lib/index.d.ts",
+  "browser": "lib/kaplan-meier-estimator.umd.js",
   "files": [
-    "lib/**/*"
+    "lib/**/*",
+    "LICENSE",
+    "README.md"
   ],
   "scripts": {
     "test": "jest",
@@ -34,13 +40,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mojoaxel/kaplan-meier-estimator.git"
+    "url": "git+https://github.com/fllstx/kaplan-meier-estimator.git"
   },
   "keywords": [],
   "bugs": {
-    "url": "https://github.com/mojoaxel/kaplan-meier-estimator/issues"
+    "url": "https://github.com/fllstx/kaplan-meier-estimator/issues"
   },
-  "homepage": "https://mojoaxel.github.io/kaplan-meier-estimator/",
+  "homepage": "https://fllstx.github.io/kaplan-meier-estimator/",
   "prettier": "@fullstax/prettier-config",
   "devDependencies": {
     "@fullstax/prettier-config": "^1.0.1",
@@ -61,6 +67,7 @@
     "papaparse": "^5.3.1",
     "prettier": "^2.5.1",
     "rollup": "^2.62.0",
+    "rollup-plugin-terser": "^7.0.2",
     "rollup-plugin-typescript2": "^0.31.1",
     "ts-jest": "^27.1.2",
     "tslib": "^2.3.1",

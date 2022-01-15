@@ -13,7 +13,7 @@ npm install --save kaplan-meier-estimator
 ### Browser
 
 ```html
-<script src="https://unpkg.com/kaplan-meier-estimator@latest/lib/kaplan-meier-estimator.iife.js">
+<script src="https://unpkg.com/kaplan-meier-estimator@latest/lib/kaplan-meier-estimator.umd.js">
 ```
 
 ## Usage
