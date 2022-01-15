@@ -28,11 +28,15 @@
   },
   "keywords": [],
   "author": "fullstax Gmbh & Co. KG <dev@fullstax.de>",
-  "license": "MIT",
+  "contributors": [{
+		"name": "Brian Craft",
+		"url": "https://github.com/acthp"
+	}],
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/mojoaxel/kaplan-meier-estimator/issues"
   },
-  "homepage": "https://github.com/mojoaxel/kaplan-meier-estimator#readme",
+  "homepage": "https://mojoaxel.github.io/kaplan-meier-estimator/",
   "prettier": "@fullstax/prettier-config",
   "devDependencies": {
     "@fullstax/prettier-config": "^1.0.1",
