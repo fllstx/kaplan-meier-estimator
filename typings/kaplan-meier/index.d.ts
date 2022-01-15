@@ -20,10 +20,10 @@ declare module 'kaplan-meier/js' {
 	}
 
 	export interface KaplanMeierExpectedObservedEventNumberResult {
-		expected: number[],
-		observed: number[],
-		dataByTimeTable: number[],
-		timeNumber: number
+		expected: number[];
+		observed: number[];
+		dataByTimeTable: number[];
+		timeNumber: number;
 	}
 
 	/**
@@ -52,15 +52,13 @@ declare module 'kaplan-meier/js' {
 	export function logranktest(
 		groupedDataTable: KaplanMeierGroupedData[]
 	): KaplanMeierLogRankTestResult;
-	
+
 	export interface KaplanMeierObject {
 		init: (initObj: InitObj) => KaplanMeierObject;
 		compute: (tte: number[], ev: boolean[]) => KaplanMeierData[];
 		expectedObservedEventNumber: (
 			groupedDataTable: KaplanMeierGroupedData[]
 		) => KaplanMeierExpectedObservedEventNumberResult;
-		logranktest:(
-			groupedDataTable: KaplanMeierGroupedData[]
-		) => any;
+		logranktest: (groupedDataTable: KaplanMeierGroupedData[]) => any;
 	}
 }

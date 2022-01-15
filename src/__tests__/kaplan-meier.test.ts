@@ -60,11 +60,16 @@ TESTS.forEach(test => {
 			const wikipediaDummyData = Papa.parse(csvData, {
 				header: true,
 				dynamicTyping: true
-			}).data;
+			}).data as {
+				i: number;
+				t: number;
+				c: boolean;
+				S: number;
+			}[];
 
-			dummyTimeToEvent = wikipediaDummyData.map((d: any) => d.t);
-			dummyCensored = wikipediaDummyData.map((d: any) => d.c);
-			dummyRate = wikipediaDummyData.map((d: any) => d.S).filter(Boolean);
+			dummyTimeToEvent = wikipediaDummyData.map(d => d.t);
+			dummyCensored = wikipediaDummyData.map(d => d.c);
+			dummyRate = wikipediaDummyData.map(d => d.S).filter(Boolean);
 		});
 
 		it(`compare to expected data`, () => {

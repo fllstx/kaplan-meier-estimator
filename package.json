@@ -1,8 +1,16 @@
 {
   "name": "kaplan-meier-estimator",
+	"description": "Kaplan-Meier-Estimator also known as the product limit estimator.",
   "version": "0.2.0",
+  "author": "fullstax Gmbh & Co. KG <dev@fullstax.de>",
+  "contributors": [
+    {
+      "name": "Brian Craft",
+      "url": "https://github.com/acthp"
+    }
+  ],
+  "license": "Apache-2.0",
   "type": "module",
-  "description": "Kaplan-Meier-Estimator also known as the product limit estimator.",
   "main": "lib/kaplan-meier-estimator.esm.js",
   "browser": "lib/kaplan-meier-estimator.iife.js",
   "types": "lib/kaplan-meier-estimator.d.ts",
@@ -12,7 +20,9 @@
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
-    "lint": "eslint ./src",
+    "lint": "npm run lint:package . && npm run lint:eslint",
+    "lint:package": "npmPkgJsonLint",
+    "lint:eslint": "eslint ./src",
     "format": "prettier --write .",
     "clean": "rimraf ./lib",
     "build": "npm run clean && rollup -c",
@@ -27,12 +37,6 @@
     "url": "git+https://github.com/mojoaxel/kaplan-meier-estimator.git"
   },
   "keywords": [],
-  "author": "fullstax Gmbh & Co. KG <dev@fullstax.de>",
-  "contributors": [{
-		"name": "Brian Craft",
-		"url": "https://github.com/acthp"
-	}],
-  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/mojoaxel/kaplan-meier-estimator/issues"
   },
@@ -52,6 +56,8 @@
     "jest": "^27.4.5",
     "kaplan-meier": "^1.1.0",
     "lodash": "^4.17.21",
+    "npm-package-json-lint": "^5.4.2",
+    "npm-package-json-lint-config-default": "^3.0.0",
     "papaparse": "^5.3.1",
     "prettier": "^2.5.1",
     "rollup": "^2.62.0",
