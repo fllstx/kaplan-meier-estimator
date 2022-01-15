@@ -1,11 +1,11 @@
 import { groupBy, sortBy, uniq } from './helpers';
 
-interface kaplanMeierEsimatorData {
+export interface KaplanMeierEsimatorData {
 	tte: number;
 	ev: boolean;
 }
 
-export interface kaplanMeierEsimatorResult {
+export interface KaplanMeierEsimatorResult {
 	rate: number;
 	time: number;
 }
@@ -35,7 +35,7 @@ interface TimeTableData {
  */
 function timeTable(tte: number[], ev: boolean[]): TimeTableData[] {
 	// sort and collate
-	const exits: kaplanMeierEsimatorData[] = sortBy(
+	const exits: KaplanMeierEsimatorData[] = sortBy(
 		tte.map((x, i) => ({ tte: x, ev: ev[i] })),
 		'tte'
 	);
@@ -44,18 +44,18 @@ function timeTable(tte: number[], ev: boolean[]): TimeTableData[] {
 	const uniqTtes = uniq<number>(tte);
 
 	// group by common time of exit
-	const groupedTtes = groupBy<kaplanMeierEsimatorData, number>(
+	const groupedTtes = groupBy<KaplanMeierEsimatorData, number>(
 		exits,
-		(x: kaplanMeierEsimatorData) => x.tte
+		(x: KaplanMeierEsimatorData) => x.tte
 	);
 
 	const firstEntry = { n: exits.length, e: 0 };
 
-	// compute d_i, n_i for times t_i (including censor times)
+	// compute d[i], n[i] for times t[i] (including censor times)
 	const result = uniqTtes.reduce((a: TimeTableData[], tte: number) => {
 		const group = groupedTtes[tte];
 		const l: TimeTableData = a.length ? a[a.length - 1] : firstEntry;
-		const events = group.filter((x: kaplanMeierEsimatorData) => x.ev);
+		const events = group.filter((x: KaplanMeierEsimatorData) => x.ev);
 
 		const n = l.n - l.e;
 
@@ -71,16 +71,27 @@ function timeTable(tte: number[], ev: boolean[]): TimeTableData[] {
 	return result;
 }
 
+export function init(lodashFunctions: {
+	pluck?: unknown;
+	uniq?: unknown;
+	sortBy?: unknown;
+	groupBy?: unknown;
+	last?: unknown;
+	find?: unknown;
+}) {
+	if (!lodashFunctions)
+		return {
+			compute
+		};
+}
+
 /**
  * See http://en.wikipedia.org/wiki/Kaplan%E2%80%93Meier_estimator
  *
  * tte  time to exit (event or censor)
  *  ev   is truthy if there is an event.
  */
-export function kaplanMeierEsimator(
-	events: number[],
-	censors: boolean[]
-): kaplanMeierEsimatorResult[] {
+export function compute(events: number[], censors: boolean[]): KaplanMeierEsimatorResult[] {
 	if (events.length !== censors.length)
 		throw new Error('[kaplan-meier-esimator]: events and censors must be of same length');
 

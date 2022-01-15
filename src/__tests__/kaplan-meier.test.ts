@@ -1,101 +1,97 @@
+import fs from 'fs';
+import Papa from 'papaparse';
 import * as KaplanMeier from 'kaplan-meier/js';
 import { KaplanMeierData } from 'kaplan-meier/js';
 import { find, groupBy, last, map, sortBy, uniq } from 'lodash';
 
-import { kaplanMeierEsimator, kaplanMeierEsimatorResult } from '../index';
+import { compute, KaplanMeierEsimatorResult } from '../index';
 
-/**
- * This function calculates the Kaplan-Meier estimate
- * using the external library "kaplan-meier".
- *
- * @see https://github.com/ucscXena/kaplan-meier
- *
- * @param {number[]} events
- * @param {boolean[]} censores
- * @returns
- */
-function getKaplanMeierEsimatorFromKaplanMeierLib(
-	events: number[],
-	censores: boolean[]
-): kaplanMeierEsimatorResult[] {
-	const kaplanData: KaplanMeierData[] = KaplanMeier.init({
-		find,
-		groupBy,
-		last,
-		pluck: map,
-		sortBy,
-		uniq
-	}).compute(events, censores);
+const TESTS = [
+	{
+		/**
+		 * Example from the german wikipedia:
+		 * https://de.wikipedia.org/wiki/Kaplan-Meier-Sch%C3%A4tzer#Beispiel
+		 */
+		title: 'Wikipedia "Kaplan-Meier-Schätzer" sample',
+		dummyFile: './src/__tests__/data/wikipedia-kaplan-meier-sample-plot.csv',
+		accuracy: 100
+	},
+	{
+		/**
+		 * Example from "Understanding survival analysis: Kaplan-Meier estimate"
+		 * by Goel, Khanna, and Kishore":
+		 * https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3059453/table/T1/
+		 */
+		title: 'Goel, Khanna, and Kishore sample 1',
+		dummyFile: './src/__tests__/data/goel-khanna-kishore-sample-data-1.csv',
+		accuracy: 1_000
+	},
+	{
+		/**
+		 * Example from "Understanding survival analysis: Kaplan-Meier estimate"
+		 * by Goel, Khanna, and Kishore":
+		 * https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3059453/table/T2/
+		 */
+		title: 'Goel, Khanna, and Kishore sample 2',
+		dummyFile: './src/__tests__/data/goel-khanna-kishore-sample-data-2.csv',
+		accuracy: 1_000
+	}
+];
 
-	return kaplanData.map((r: KaplanMeierData) => ({
-		rate: r.s,
-		time: r.t
-	}));
-}
+// This is needed for kaplan-meier's init function.
+const lodashFunctions = {
+	find,
+	groupBy,
+	last,
+	pluck: map,
+	sortBy,
+	uniq
+};
 
-describe('', () => {
-	test('wikipedia example data', () => {
-		// example from wikipedia: https://commons.wikimedia.org/wiki/File:Kaplan-Meier-sample-plot.svg
-		const events = [1, 12, 22, 29, 31, 36, 38, 50, 60, 61, 70, 88, 99, 110, 140];
-		const censores = [
-			false,
-			true,
-			false,
-			true,
-			true,
-			false,
-			false,
-			false,
-			false,
-			true,
-			true,
-			false,
-			false,
-			false,
-			false
-		];
+TESTS.forEach(test => {
+	describe(test.title, () => {
+		let dummyTimeToEvent: number[] = [];
+		let dummyCensored: boolean[] = [];
+		let dummyRate: number[] = [];
 
-		const resultKaplanMeierLib = getKaplanMeierEsimatorFromKaplanMeierLib(events, censores);
-		const result = kaplanMeierEsimator(events, censores);
-		expect(result).toEqual(resultKaplanMeierLib);
-	});
+		beforeAll(() => {
+			// load the sample data from a csv file
+			const csvData = fs.readFileSync(test.dummyFile, 'utf8');
+			const wikipediaDummyData = Papa.parse(csvData, {
+				header: true,
+				dynamicTyping: true
+			}).data;
 
-	test('Understanding survival analysis', () => {
-		// example from "Understanding survival analysis: Kaplan-Meier estimate"
-		// by Goel, Khanna, and Kishore":  https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3059453/
-		const events = [
-			6, 12, 21, 27, 32, 39, 43, 43, 46, 89, 115, 139, 181, 211, 217, 261, 263, 270, 295, 311, 335,
-			346, 365
-		];
-		const censores = [
-			true,
-			true,
-			true,
-			true,
-			true,
-			true,
-			true,
-			true,
-			false,
-			true,
-			false,
-			false,
-			false,
-			false,
-			false,
-			true,
-			true,
-			true,
-			false,
-			true,
-			false,
-			false,
-			false
-		];
+			dummyTimeToEvent = wikipediaDummyData.map((d: any) => d.t);
+			dummyCensored = wikipediaDummyData.map((d: any) => d.c);
+			dummyRate = wikipediaDummyData.map((d: any) => d.S).filter(Boolean);
+		});
 
-		const resultKaplanMeierLib = getKaplanMeierEsimatorFromKaplanMeierLib(events, censores);
-		const result = kaplanMeierEsimator(events, censores);
+		it(`compare to expected data`, () => {
+			const result = compute(dummyTimeToEvent, dummyCensored);
+			const resultRatesRounded = result.map(
+				(r: KaplanMeierEsimatorResult) => Math.round(r.rate * test.accuracy) / test.accuracy
+			);
+			const dummyRateRounded = dummyRate.map(
+				rate => Math.round(rate * test.accuracy) / test.accuracy
+			);
+			expect(resultRatesRounded.length).toEqual(dummyRateRounded.length);
+			expect(resultRatesRounded).toEqual(dummyRateRounded);
+		});
 
-		expect(result).toEqual(resultKaplanMeierLib);
+		it(`compare to "kaplan-meier" library's compute function`, () => {
+			const kaplanData: KaplanMeierData[] = KaplanMeier.init(lodashFunctions).compute(
+				dummyTimeToEvent,
+				dummyCensored
+			);
+			const resultKaplanMeierLib: KaplanMeierEsimatorResult[] = kaplanData.map(
+				(r: KaplanMeierData) => ({
+					rate: r.s,
+					time: r.t
+				})
+			);
+			const result = compute(dummyTimeToEvent, dummyCensored);
+			expect(result).toEqual(resultKaplanMeierLib);
+		});
 	});
 });
