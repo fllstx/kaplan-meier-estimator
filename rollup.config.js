@@ -10,6 +10,11 @@ const globals = {
 	...packageJson.peerDependencies
 };
 
+// get the package name without the scope
+const packageName = packageJson.name.includes('/')
+	? packageJson.name.split('/')[1]
+	: packageJson.name;
+
 export default [
 	{
 		input: 'src/index.ts',
@@ -27,7 +32,7 @@ export default [
 		input: 'src/index.ts',
 		output: [
 			{
-				file: `lib/${packageJson.name}.cjs.js`,
+				file: `lib/${packageName}.cjs.js`,
 				format: 'cjs',
 				sourcemap: true
 			}
@@ -52,7 +57,7 @@ export default [
 		input: 'src/index.ts',
 		output: [
 			{
-				file: `lib/${packageJson.name}.iife.js`,
+				file: `lib/${packageName}.iife.js`,
 				name: 'KME',
 				format: 'iife',
 				sourcemap: true
