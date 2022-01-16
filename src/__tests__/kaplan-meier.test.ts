@@ -92,7 +92,8 @@ TESTS.forEach(test => {
 			const resultKaplanMeierLib: KaplanMeierEsimatorResult[] = kaplanData.map(
 				(r: KaplanMeierData) => ({
 					rate: r.s,
-					time: r.t
+					time: r.t,
+					censored: r.e
 				})
 			);
 			const result = compute(dummyTimeToEvent, dummyCensored);

@@ -18,7 +18,7 @@ npm install --save kaplan-meier-estimator
 
 ## Usage
 
-### node/typescript usage
+### typescript usage
 
 ```ts
 import { compute } from 'kaplan-meier-estimator';
@@ -44,11 +44,11 @@ consol.dir(kmData);
 ### example output
 
 ```sh
-0: {rate: 1, time: 1}
-1: {rate: 0.9285714285714286, time: 12}
-2: {rate: 0.9285714285714286, time: 22}
-3: {rate: 0.8511904761904762, time: 29}
-4: {rate: 0.7738095238095237, time: 31}
+0: {time: 1, rate: 1, censored: false}
+1: {time: 12, rate: 0.9285714285714286, censored: true}
+2: {time: 22, rate: 0.9285714285714286, censored: false}
+3: {time: 29, rate: 0.8511904761904762, censored: true}
+4: {time: 31, rate: 0.7738095238095237, censored: true}
 …
 ```
 

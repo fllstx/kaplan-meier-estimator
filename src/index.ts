@@ -8,6 +8,7 @@ export interface KaplanMeierEsimatorData {
 export interface KaplanMeierEsimatorResult {
 	rate: number;
 	time: number;
+	censored: boolean;
 }
 
 interface KaplanMeierResultData {
@@ -163,6 +164,7 @@ export function compute(events: number[], censors: boolean[]): KaplanMeierEsimat
 
 	return result.map(r => ({
 		rate: r.s,
-		time: r.t
+		time: r.t,
+		censored: r.e || false
 	}));
 }
