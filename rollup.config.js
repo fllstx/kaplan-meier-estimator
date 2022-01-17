@@ -1,5 +1,3 @@
-import resolve from '@rollup/plugin-node-resolve';
-import commonjs from '@rollup/plugin-commonjs';
 import typescript from 'rollup-plugin-typescript2';
 import { terser } from 'rollup-plugin-terser';
 
@@ -25,7 +23,7 @@ export default [
 				sourcemap: true
 			}
 		],
-		plugins: [commonjs(), resolve(), typescript()],
+		plugins: [typescript()],
 		external: Object.keys(globals)
 	},
 	{
@@ -37,7 +35,7 @@ export default [
 				sourcemap: true
 			}
 		],
-		plugins: [commonjs(), resolve(), typescript()],
+		plugins: [typescript()],
 		external: Object.keys(globals)
 	},
 	{
@@ -50,7 +48,7 @@ export default [
 				sourcemap: true
 			}
 		],
-		plugins: [commonjs(), resolve(), typescript(), terser()],
+		plugins: [typescript(), terser()],
 		external: Object.keys(globals)
 	},
 	{
@@ -63,7 +61,7 @@ export default [
 				sourcemap: true
 			}
 		],
-		plugins: [commonjs(), resolve(), typescript(), terser()],
+		plugins: [typescript(), terser()],
 		external: Object.keys(globals)
 	}
 ];
