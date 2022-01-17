@@ -50,18 +50,5 @@ export default [
 		],
 		plugins: [typescript(), terser()],
 		external: Object.keys(globals)
-	},
-	{
-		input: 'src/index.ts',
-		output: [
-			{
-				file: `lib/${packageName}.iife.js`,
-				name: 'KME',
-				format: 'iife',
-				sourcemap: true
-			}
-		],
-		plugins: [typescript(), terser()],
-		external: Object.keys(globals)
 	}
 ];
