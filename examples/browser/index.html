@@ -35,7 +35,11 @@
 						</thead>
 						<tbody></tbody>
 					</table>
-					<p><a href="/src/__tests__/data/wikipedia-kaplan-meier-sample-plot.csv">Download source-data as csv</a></p>
+					<p>
+						<a href="/src/__tests__/data/wikipedia-kaplan-meier-sample-plot.csv"
+							>Download source-data as csv</a
+						>
+					</p>
 				</section>
 
 				<section id="example-plot">
@@ -45,7 +49,9 @@
 
 				<section id="reference-plot">
 					<h2>reference</h2>
-					<div id="reference_plot"><img src="/src/__tests__/data/wikipedia-kaplan-meier-sample-plot.svg"></div>
+					<div id="reference_plot">
+						<img src="/src/__tests__/data/wikipedia-kaplan-meier-sample-plot.svg" />
+					</div>
 				</section>
 			</article>
 		</main>
@@ -113,7 +119,7 @@
 						shape: 'hv'
 					}
 				};
-				const cencoredEvents =  data.filter(d => !d.event);
+				const cencoredEvents = data.filter(d => !d.event);
 				var traceCencered = {
 					name: 'censored events',
 					x: cencoredEvents.map(d => d.time),
@@ -143,7 +149,9 @@
 			}
 
 			window.onload = async function () {
-				const sourceData = await loadData('/src/__tests__/data/wikipedia-kaplan-meier-sample-plot.csv');
+				const sourceData = await loadData(
+					'/src/__tests__/data/wikipedia-kaplan-meier-sample-plot.csv'
+				);
 				console.dir(sourceData);
 
 				const kmeData = KME.compute(

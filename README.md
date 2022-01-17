@@ -2,6 +2,8 @@
 
 A JavaScript implementation of the [Kaplan-Meier-Estimator](https://en.wikipedia.org/wiki/Kaplan%E2%80%93Meier_estimator) also known as the product limit estimator.
 
+This library implements the `init` and `compute` functions from the [kaplan-meier](https://www.npmjs.com/package/kaplan-meier) library and is therefore a modern "plug-in" replacement.
+
 ## Installation
 
 ### node
@@ -18,7 +20,11 @@ npm install --save kaplan-meier-estimator
 
 ## Usage
 
-### es6/typescript usage
+To be compatible with the [kaplan-meier](https://www.npmjs.com/package/kaplan-meier) package we also provide an `init()` function, that does nothing. No external lodash/underscore functions are needed! This `init` function is deprecated and will be removed in the future (better not use it anymore!).
+
+### esm/typescript usage
+
+See [examples/node](./examples/node/) for an example implementation.
 
 ```ts
 import { compute } from 'kaplan-meier-estimator';
@@ -30,7 +36,15 @@ const kmData = compute(timeToEvents, events);
 console.table(kmData);
 ```
 
+CommonJs is also supported:
+
+```js
+const { compute } = require('kaplan-meier-estimator/lib/kaplan-meier-estimator.cjs';
+```
+
 ### browser usage
+
+See [examples/browser](./examples/browser/) for an example implementation. To server this example jsu start d webserver in the root of this repository.
 
 ```javascript
 const timeToEvents = [1, 12, 22, 29, 31, …];
@@ -60,23 +74,23 @@ console.table(kmData);
 
 ### Data
 
-|   # | Time to Event | event | >   | S(t) |
-| --: | ------------: | :---: | --- | ---: |
-|   1 |             1 | false |     |    1 |
-|   2 |            12 | true  |     | 0.93 |
-|   3 |            22 | false |     | 0.93 |
-|   4 |            29 | true  |     | 0.85 |
-|   5 |            31 | true  |     | 0.77 |
-|   6 |            36 | false |     | 0.77 |
-|   7 |            38 | false |     | 0.77 |
-|   8 |            50 | false |     | 0.77 |
-|   9 |            60 | false |     | 0.77 |
-|  10 |            61 | true  |     | 0.64 |
-|  11 |            70 | true  |     | 0.52 |
-|  12 |            88 | false |     | 0.52 |
-|  13 |            99 | false |     | 0.52 |
-|  14 |           110 | false |     | 0.52 |
-|  15 |           140 | false |     | 0.52 |
+|   # | Time to Event |   event   | >   | S(t) |
+| --: | ------------: | :-------: | --- | ---: |
+|   1 |             1 | **false** |     |    1 |
+|   2 |            12 |   true    |     | 0.93 |
+|   3 |            22 | **false** |     | 0.93 |
+|   4 |            29 |   true    |     | 0.85 |
+|   5 |            31 |   true    |     | 0.77 |
+|   6 |            36 | **false** |     | 0.77 |
+|   7 |            38 | **false** |     | 0.77 |
+|   8 |            50 | **false** |     | 0.77 |
+|   9 |            60 | **false** |     | 0.77 |
+|  10 |            61 |   true    |     | 0.64 |
+|  11 |            70 |   true    |     | 0.52 |
+|  12 |            88 | **false** |     | 0.52 |
+|  13 |            99 | **false** |     | 0.52 |
+|  14 |           110 | **false** |     | 0.52 |
+|  15 |           140 | **false** |     | 0.52 |
 
 ### Plot
 
