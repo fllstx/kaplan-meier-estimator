@@ -140,7 +140,7 @@ export function compute(events: number[], censors: boolean[]): KaplanMeierEsimat
 				// there were events at this t[i]
 				a.push({
 					t: dn.t || 0,
-					e: true,
+					e: false, // not cencored
 					s: l.s * (1 - dn.d / dn.n),
 					n: dn.n,
 					d: dn.d,
@@ -150,7 +150,7 @@ export function compute(events: number[], censors: boolean[]): KaplanMeierEsimat
 				// only censors
 				a.push({
 					t: dn.t || 0,
-					e: false,
+					e: true, // cencored
 					s: l.s,
 					n: dn.n,
 					d: dn.d,
