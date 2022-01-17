@@ -51,7 +51,7 @@ const lodashFunctions = {
 TESTS.forEach(test => {
 	describe(test.title, () => {
 		let dummyTimeToEvent: number[] = [];
-		let dummyCensored: boolean[] = [];
+		let dummyEvents: boolean[] = [];
 		let dummyRate: number[] = [];
 
 		beforeAll(() => {
@@ -63,17 +63,17 @@ TESTS.forEach(test => {
 			}).data as {
 				i: number;
 				t: number;
-				c: boolean;
+				e: boolean;
 				S: number;
 			}[];
 
 			dummyTimeToEvent = wikipediaDummyData.map(d => d.t);
-			dummyCensored = wikipediaDummyData.map(d => d.c);
+			dummyEvents = wikipediaDummyData.map(d => d.e);
 			dummyRate = wikipediaDummyData.map(d => d.S).filter(Boolean);
 		});
 
 		it(`compare to expected data`, () => {
-			const result = compute(dummyTimeToEvent, dummyCensored);
+			const result = compute(dummyTimeToEvent, dummyEvents);
 			const resultRatesRounded = result.map(
 				(r: KaplanMeierEsimatorResult) => Math.round(r.rate * test.accuracy) / test.accuracy
 			);
@@ -87,16 +87,16 @@ TESTS.forEach(test => {
 		it(`compare to "kaplan-meier" library's compute function`, () => {
 			const kaplanData: KaplanMeierData[] = KaplanMeier.init(lodashFunctions).compute(
 				dummyTimeToEvent,
-				dummyCensored
+				dummyEvents
 			);
 			const resultKaplanMeierLib: KaplanMeierEsimatorResult[] = kaplanData.map(
 				(r: KaplanMeierData) => ({
 					rate: r.s,
 					time: r.t,
-					censored: r.e
+					event: r.e
 				})
 			);
-			const result = compute(dummyTimeToEvent, dummyCensored);
+			const result = compute(dummyTimeToEvent, dummyEvents);
 			expect(result).toEqual(resultKaplanMeierLib);
 		});
 	});

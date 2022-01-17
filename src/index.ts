@@ -8,7 +8,7 @@ export interface KaplanMeierEsimatorData {
 export interface KaplanMeierEsimatorResult {
 	rate: number;
 	time: number;
-	censored: boolean;
+	event: boolean;
 }
 
 interface KaplanMeierResultData {
@@ -113,16 +113,16 @@ export function init(lodashFunctions?: KaplanMeierLodashHelpers) {
  * @see http://en.wikipedia.org/wiki/Kaplan%E2%80%93Meier_estimator
  *
  * @export
- * @param {number[]} events time to exit (event or censor).
- * @param {boolean[]} censors is truthy if there is an event.
+ * @param {number[]} ttes time to exit (event or censor).
+ * @param {boolean[]} events is truthy if there is an event.
  * @returns {KaplanMeierEsimatorResult[]}
  */
-export function compute(events: number[], censors: boolean[]): KaplanMeierEsimatorResult[] {
-	if (events.length !== censors.length) {
+export function compute(ttes: number[], events: boolean[]): KaplanMeierEsimatorResult[] {
+	if (ttes.length !== events.length) {
 		throw new Error('[kaplan-meier-esimator]: events and censors must be of same length');
 	}
 
-	const dini: TimeTableData[] = timeTable(events, censors);
+	const dini: TimeTableData[] = timeTable(ttes, events);
 
 	const firstEntry: KaplanMeierResultData = {
 		s: 1,
@@ -140,7 +140,7 @@ export function compute(events: number[], censors: boolean[]): KaplanMeierEsimat
 				// there were events at this t[i]
 				a.push({
 					t: dn.t || 0,
-					e: false, // not cencored
+					e: true,
 					s: l.s * (1 - dn.d / dn.n),
 					n: dn.n,
 					d: dn.d,
@@ -150,7 +150,7 @@ export function compute(events: number[], censors: boolean[]): KaplanMeierEsimat
 				// only censors
 				a.push({
 					t: dn.t || 0,
-					e: true, // cencored
+					e: false,
 					s: l.s,
 					n: dn.n,
 					d: dn.d,
@@ -165,6 +165,6 @@ export function compute(events: number[], censors: boolean[]): KaplanMeierEsimat
 	return result.map(r => ({
 		rate: r.s,
 		time: r.t,
-		censored: r.e || false
+		event: r.e || false
 	}));
 }

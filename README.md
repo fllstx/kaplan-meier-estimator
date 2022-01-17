@@ -18,61 +18,65 @@ npm install --save kaplan-meier-estimator
 
 ## Usage
 
-### typescript usage
+### es6/typescript usage
 
 ```ts
 import { compute } from 'kaplan-meier-estimator';
 
-const events = [1, 12, 22, 29, 31, …];
-const censored = [false, true, false, true, true, …];
+const timeToEvents = [1, 12, 22, 29, 31, …];
+const events = [false, true, false, true, true, …];
 
-const kmData = compute(events, censored);
-consol.dir(kmData);
+const kmData = compute(timeToEvents, events);
+console.table(kmData);
 ```
 
 ### browser usage
 
 ```javascript
-const events = [1, 12, 22, 29, 31, …];
-const censored = [false, true, false, true, true, …];
+const timeToEvents = [1, 12, 22, 29, 31, …];
+const events = [false, true, false, true, true, …];
 
-const kmData = KME.compute((events, censored);
+const kmData = KME.compute((timeToEvents, events);
 
-consol.dir(kmData);
+console.table(kmData);
 ```
 
 ### example output
 
 ```sh
-0: {time: 1, rate: 1, censored: false}
-1: {time: 12, rate: 0.9285714285714286, censored: true}
-2: {time: 22, rate: 0.9285714285714286, censored: false}
-3: {time: 29, rate: 0.8511904761904762, censored: true}
-4: {time: 31, rate: 0.7738095238095237, censored: true}
-…
+┌─────────┬───────┬──────┬───────┐
+│ (index) │  rate │ time │ event │
+├─────────┼───────┼──────┼───────┤
+│    0    │   1   │  1   │ false │
+│    1    │ 0.929 │  12  │ true  │
+│    2    │ 0.929 │  22  │ false │
+│    3    │ 0.851 │  29  │ true  │
+│    4    │ 0.774 │  31  │ true  │
+│    …    │   …   │   …  │   …   │
+└─────────┴───────┴──────┴───────┘
 ```
 
 ## Example
 
 ### Data
 
-|   # | Time to Event | censored | >   | S(t) |
-| --: | ------------: | :------: | --- | ---: |
-|   1 |             1 |  false   |     |    1 |
-|   2 |            12 |   true   |     | 0.93 |
-|   3 |            22 |  false   |     | 0.93 |
-|   4 |            29 |   true   |     | 0.85 |
-|   5 |            31 |   true   |     | 0.77 |
-|   6 |            36 |  false   |     | 0.77 |
-|   7 |            38 |  false   |     | 0.77 |
-|   8 |            50 |  false   |     | 0.77 |
-|   9 |            60 |  false   |     | 0.77 |
-|  10 |            61 |   true   |     | 0.64 |
-|  11 |            70 |   true   |     | 0.52 |
-|  12 |            88 |  false   |     | 0.52 |
-|  13 |            99 |  false   |     | 0.52 |
-|  14 |           110 |  false   |     | 0.52 |
-|  15 |           140 |  false   |     | 0.52 |
+|   # | Time to Event | event | >   | S(t) |
+| --: | ------------: | :---: | --- | ---: |
+|   1 |             1 | false |     |    1 |
+|   2 |            12 | true  |     | 0.93 |
+|   3 |            22 | false |     | 0.93 |
+|   4 |            29 | true  |     | 0.85 |
+|   5 |            31 | true  |     | 0.77 |
+|   6 |            36 | false |     | 0.77 |
+|   7 |            38 | false |     | 0.77 |
+|   8 |            50 | false |     | 0.77 |
+|   9 |            60 | false |     | 0.77 |
+|  10 |            61 | true  |     | 0.64 |
+|  11 |            70 | true  |     | 0.52 |
+|  12 |            88 | false |     | 0.52 |
+|  13 |            99 | false |     | 0.52 |
+|  14 |           110 | false |     | 0.52 |
+|  15 |           140 | false |     | 0.52 |
 
 ### Plot
 
