@@ -5,7 +5,7 @@ import packageJson from './package.json';
 
 const globals = {
 	...packageJson.devDependencies,
-	...packageJson.peerDependencies
+	...packageJson.peerDependencies,
 };
 
 export default [
@@ -15,11 +15,11 @@ export default [
 			{
 				file: packageJson.module,
 				format: 'esm',
-				sourcemap: true
-			}
+				sourcemap: true,
+			},
 		],
 		plugins: [typescript()],
-		external: Object.keys(globals)
+		external: Object.keys(globals),
 	},
 	{
 		input: 'src/index.ts',
@@ -27,11 +27,11 @@ export default [
 			{
 				file: packageJson.main,
 				format: 'cjs',
-				sourcemap: true
-			}
+				sourcemap: true,
+			},
 		],
 		plugins: [typescript()],
-		external: Object.keys(globals)
+		external: Object.keys(globals),
 	},
 	{
 		input: 'src/index.ts',
@@ -40,10 +40,10 @@ export default [
 				file: packageJson.browser,
 				name: 'KME',
 				format: 'umd',
-				sourcemap: true
-			}
+				sourcemap: true,
+			},
 		],
 		plugins: [typescript(), terser()],
-		external: Object.keys(globals)
-	}
+		external: Object.keys(globals),
+	},
 ];

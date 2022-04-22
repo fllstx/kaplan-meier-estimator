@@ -69,7 +69,7 @@
 							} else {
 								resolve(results.data);
 							}
-						}
+						},
 					});
 				});
 			}
@@ -116,8 +116,8 @@
 					line: {
 						color: 'red',
 						width: 1,
-						shape: 'hv'
-					}
+						shape: 'hv',
+					},
 				};
 				const cencoredEvents = data.filter(d => !d.event);
 				var traceCencered = {
@@ -129,19 +129,19 @@
 					marker: {
 						color: '#000',
 						size: 6,
-						symbol: 'cross'
-					}
+						symbol: 'cross',
+					},
 				};
 				var data = [traceLine, traceCencered];
 				const layout = {
 					title: 'Kaplan-Meier estimator',
 					xaxis: {
-						title: 'time'
+						title: 'time',
 					},
 					yaxis: {
 						title: 'S(t)',
-						range: [0, 1.1]
-					}
+						range: [0, 1.1],
+					},
 				};
 
 				document.getElementById('wikipedia_plot').innerHTML = '';

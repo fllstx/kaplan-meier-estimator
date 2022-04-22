@@ -16,7 +16,7 @@ const events = [
 	false,
 	false,
 	false,
-	false
+	false,
 ];
 
 const kmData = compute(timeToEvents, events);

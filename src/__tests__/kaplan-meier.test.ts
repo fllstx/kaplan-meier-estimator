@@ -14,7 +14,7 @@ const TESTS = [
 		 */
 		title: 'Wikipedia "Kaplan-Meier-Schätzer" sample',
 		dummyFile: './src/__tests__/data/wikipedia-kaplan-meier-sample-plot.csv',
-		accuracy: 100
+		accuracy: 100,
 	},
 	{
 		/**
@@ -24,7 +24,7 @@ const TESTS = [
 		 */
 		title: 'Goel, Khanna, and Kishore sample 1',
 		dummyFile: './src/__tests__/data/goel-khanna-kishore-sample-data-1.csv',
-		accuracy: 1_000
+		accuracy: 1_000,
 	},
 	{
 		/**
@@ -34,8 +34,8 @@ const TESTS = [
 		 */
 		title: 'Goel, Khanna, and Kishore sample 2',
 		dummyFile: './src/__tests__/data/goel-khanna-kishore-sample-data-2.csv',
-		accuracy: 1_000
-	}
+		accuracy: 1_000,
+	},
 ];
 
 // This is needed for kaplan-meier's init function.
@@ -45,7 +45,7 @@ const lodashFunctions = {
 	last,
 	pluck: map,
 	sortBy,
-	uniq
+	uniq,
 };
 
 TESTS.forEach(test => {
@@ -59,7 +59,7 @@ TESTS.forEach(test => {
 			const csvData = fs.readFileSync(test.dummyFile, 'utf8');
 			const wikipediaDummyData = Papa.parse(csvData, {
 				header: true,
-				dynamicTyping: true
+				dynamicTyping: true,
 			}).data as {
 				i: number;
 				t: number;
@@ -93,7 +93,7 @@ TESTS.forEach(test => {
 				(r: KaplanMeierData) => ({
 					rate: r.s,
 					time: r.t,
-					event: r.e
+					event: r.e,
 				})
 			);
 			const result = compute(dummyTimeToEvent, dummyEvents);
