@@ -81,7 +81,7 @@ function timeTable(tte: number[], ev: boolean[]): TimeTableData[] {
 			n, // at risk
 			e: group.length, // number exiting
 			d: events.length, // number events (death)
-			t: group[0].tte // time
+			t: group[0].tte, // time
 		});
 		return a;
 	}, []);
@@ -105,7 +105,7 @@ export function init(lodashFunctions?: KaplanMeierLodashHelpers) {
 		`[kaplan-meier-estimator] the "init" function is deprecated. It will be remove in the future!`
 	);
 	return {
-		compute
+		compute,
 	};
 }
 
@@ -126,7 +126,7 @@ export function compute(ttes: number[], events: boolean[]): KaplanMeierEsimatorR
 
 	const firstEntry: KaplanMeierResultData = {
 		s: 1,
-		t: 0
+		t: 0,
 	};
 
 	// s : the survival rate from t=0 to the particular time (i.e. the end of the time interval)
@@ -144,7 +144,7 @@ export function compute(ttes: number[], events: boolean[]): KaplanMeierEsimatorR
 					s: l.s * (1 - dn.d / dn.n),
 					n: dn.n,
 					d: dn.d,
-					rate: dn.d / dn.n
+					rate: dn.d / dn.n,
 				});
 			} else {
 				// only censors
@@ -154,7 +154,7 @@ export function compute(ttes: number[], events: boolean[]): KaplanMeierEsimatorR
 					s: l.s,
 					n: dn.n,
 					d: dn.d,
-					rate: null
+					rate: null,
 				});
 			}
 			return a;
@@ -165,6 +165,6 @@ export function compute(ttes: number[], events: boolean[]): KaplanMeierEsimatorR
 	return result.map(r => ({
 		rate: r.s,
 		time: r.t,
-		event: r.e || false
+		event: r.e || false,
 	}));
 }
