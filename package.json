@@ -15,9 +15,9 @@
   ],
   "license": "Apache-2.0",
   "type": "module",
-  "module": "lib/index.js",
+  "module": "lib/index.mjs",
   "types": "lib/index.d.ts",
-  "main": "lib/kaplan-meier-estimator.cjs.js",
+  "main": "lib/kaplan-meier-estimator.cjs",
   "browser": "lib/kaplan-meier-estimator.umd.js",
   "files": [
     "lib/**/*",

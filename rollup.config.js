@@ -3,7 +3,7 @@ import { terser } from 'rollup-plugin-terser';
 
 import packageJson from './package.json';
 
-const globals = {
+const DEPENDENCIES = {
 	...packageJson.devDependencies,
 	...packageJson.peerDependencies,
 };
@@ -19,7 +19,7 @@ export default [
 			},
 		],
 		plugins: [typescript()],
-		external: Object.keys(globals),
+		external: Object.keys(DEPENDENCIES),
 	},
 	{
 		input: 'src/index.ts',
@@ -31,7 +31,7 @@ export default [
 			},
 		],
 		plugins: [typescript()],
-		external: Object.keys(globals),
+		external: Object.keys(DEPENDENCIES),
 	},
 	{
 		input: 'src/index.ts',
@@ -44,6 +44,6 @@ export default [
 			},
 		],
 		plugins: [typescript(), terser()],
-		external: Object.keys(globals),
+		external: Object.keys(DEPENDENCIES),
 	},
 ];
