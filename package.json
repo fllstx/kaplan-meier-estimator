@@ -1,7 +1,7 @@
 {
   "name": "@fullstax/kaplan-meier-estimator",
   "description": "Kaplan-Meier-Estimator also known as the product limit estimator.",
-  "version": "2.1.0",
+  "version": "3.0.0",
   "author": "fullstax Gmbh & Co. KG <dev@fullstax.de>",
   "contributors": [
     {
