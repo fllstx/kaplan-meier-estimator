@@ -34,7 +34,7 @@ export function groupBy<T, K extends number>(
 		if (!previous[group]) previous[group] = [];
 		previous[group].push(currentItem);
 		return previous;
-	}, {} as Record<K, T[]>);
+	}, {} as { [K: number]: T[] });
 }
 
 /**

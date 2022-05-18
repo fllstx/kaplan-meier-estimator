@@ -2,8 +2,6 @@
 
 A JavaScript implementation of the [Kaplan-Meier-Estimator](https://en.wikipedia.org/wiki/Kaplan%E2%80%93Meier_estimator) also known as the product limit estimator.
 
-This library implements the `init` and `compute` functions from the [kaplan-meier](https://www.npmjs.com/package/kaplan-meier) library and is therefore a modern "plug-in" replacement.
-
 ## Installation
 
 ### node
@@ -20,14 +18,12 @@ npm install --save kaplan-meier-estimator
 
 ## Usage
 
-To be compatible with the [kaplan-meier](https://www.npmjs.com/package/kaplan-meier) package we also provide an `init()` function, that does nothing. No external lodash/underscore functions are needed! This `init` function is deprecated and will be removed in the future (better not use it anymore!).
-
 ### esm/typescript usage
 
 See [examples/node](./examples/node/) for an example implementation.
 
 ```ts
-import { compute } from 'kaplan-meier-estimator';
+import { compute } from '@fullstax/kaplan-meier-estimator';
 
 const timeToEvents = [1, 12, 22, 29, 31, …];
 const events = [false, true, false, true, true, …];
@@ -39,12 +35,16 @@ console.table(kmData);
 CommonJs is also supported:
 
 ```js
-const { compute } = require('kaplan-meier-estimator/lib/kaplan-meier-estimator.cjs';
+const { compute } = require('@fullstax/kaplan-meier-estimator');
 ```
 
 ### browser usage
 
 See [examples/browser](./examples/browser/) for an example implementation. To server this example jsu start d webserver in the root of this repository.
+
+```html
+<script src="https://unpkg.com/@fullstax/kaplan-meier-estimator/lib/kaplan-meier-estimator.umd.js">
+```
 
 ```javascript
 const timeToEvents = [1, 12, 22, 29, 31, …];

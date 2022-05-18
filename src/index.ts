@@ -1,14 +1,14 @@
 import { groupBy, sortBy, uniq } from './helpers';
 
-export interface KaplanMeierEsimatorData {
-	tte: number;
-	ev: boolean;
-}
-
 export interface KaplanMeierEsimatorResult {
 	rate: number;
 	time: number;
 	event: boolean;
+}
+
+interface KaplanMeierEsimatorData {
+	tte: number;
+	ev: boolean;
 }
 
 interface KaplanMeierResultData {
@@ -25,23 +25,6 @@ interface TimeTableData {
 	e: number;
 	d?: number;
 	t?: number;
-}
-
-/**
- * @interface KaplanMeierLodashHelpers
- *
- * This interface is used as the parameters for the init funktion.
- * This is a leftover from the original implementation and will be removed in the future.
- *
- * @deprecated
- */
-interface KaplanMeierLodashHelpers {
-	pluck?: unknown;
-	uniq?: unknown;
-	sortBy?: unknown;
-	groupBy?: unknown;
-	last?: unknown;
-	find?: unknown;
 }
 
 /**
@@ -87,26 +70,6 @@ function timeTable(tte: number[], ev: boolean[]): TimeTableData[] {
 	}, []);
 
 	return result;
-}
-
-/**
- * This init function is a leftover from the original implementation
- * inthe "kaplan-meier" library and will be removed in the future.
- *
- * @deprecated
- *
- * @export
- * @param {KaplanMeierLodashHelpers} [lodashFunctions]
- * @returns
- */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function init(lodashFunctions?: KaplanMeierLodashHelpers) {
-	console.warn(
-		`[kaplan-meier-estimator] the "init" function is deprecated. It will be remove in the future!`
-	);
-	return {
-		compute,
-	};
 }
 
 /**
