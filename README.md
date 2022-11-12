@@ -98,4 +98,4 @@ console.table(kmData);
 
 ## License
 
-Licensed 2022 by [fullstax GmbH & Co. KG](https://www.fullstax.de) under a [Apache 2.0 license](./LICENSE).
+Licensed 2022 by [fullstax GmbH & Co. KG](https://www.fullstax.de) under a [MIT License](./LICENSE).
