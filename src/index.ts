@@ -6,7 +6,7 @@ export interface KaplanMeierEstimatorResult {
 	event: boolean;
 }
 
-interface KaplanMeierEsimatorData {
+interface KaplanMeierEstimatorData {
 	tte: number;
 	ev: boolean;
 }
@@ -36,7 +36,7 @@ interface TimeTableData {
  */
 function timeTable(tte: number[], ev: boolean[]): TimeTableData[] {
 	// sort and collate
-	const exits: KaplanMeierEsimatorData[] = sortBy(
+	const exits: KaplanMeierEstimatorData[] = sortBy(
 		tte.map((x, i) => ({ tte: x, ev: ev[i] })),
 		'tte'
 	);
@@ -45,9 +45,9 @@ function timeTable(tte: number[], ev: boolean[]): TimeTableData[] {
 	const uniqTtes = uniq<number>(tte);
 
 	// group by common time of exit
-	const groupedTtes = groupBy<KaplanMeierEsimatorData, number>(
+	const groupedTtes = groupBy<KaplanMeierEstimatorData, number>(
 		exits,
-		(x: KaplanMeierEsimatorData) => x.tte
+		(x: KaplanMeierEstimatorData) => x.tte
 	);
 
 	const firstEntry = { n: exits.length, e: 0 };
@@ -56,7 +56,7 @@ function timeTable(tte: number[], ev: boolean[]): TimeTableData[] {
 	const result = uniqTtes.reduce((a: TimeTableData[], tte: number) => {
 		const group = groupedTtes[tte];
 		const l: TimeTableData = a.length ? a[a.length - 1] : firstEntry;
-		const events = group.filter((x: KaplanMeierEsimatorData) => x.ev);
+		const events = group.filter((x: KaplanMeierEstimatorData) => x.ev);
 
 		const n = l.n - l.e;
 
@@ -82,7 +82,7 @@ function timeTable(tte: number[], ev: boolean[]): TimeTableData[] {
  */
 export function compute(ttes: number[], events: boolean[]): KaplanMeierEstimatorResult[] {
 	if (ttes.length !== events.length) {
-		throw new Error('[kaplan-meier-esimator]: events and censors must be of same length');
+		throw new Error('[kaplan-meier-estimator]: events and censors must be of same length');
 	}
 
 	const dini: TimeTableData[] = timeTable(ttes, events);
