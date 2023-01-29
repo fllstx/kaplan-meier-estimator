@@ -4,7 +4,7 @@ import * as KaplanMeier from 'kaplan-meier/js';
 import { KaplanMeierData } from 'kaplan-meier/js';
 import { find, groupBy, last, map, sortBy, uniq } from 'lodash';
 
-import { compute, KaplanMeierEsimatorResult } from '../index';
+import { compute, KaplanMeierEstimatorResult } from '../index';
 
 const TESTS = [
 	{
@@ -55,6 +55,13 @@ TESTS.forEach(test => {
 		let dummyRate: number[] = [];
 
 		beforeAll(() => {
+			// silence the console.warns from kaplan-meier:
+			//   "The npm package jStat is no longer maintained. Instead use jstat (lowercase)."
+			//   "Visit https://www.npmjs.com/package/jstat for more information."
+			jest.spyOn(console, 'warn').mockImplementation(() => {
+				// do nothing
+			});
+
 			// load the sample data from a csv file
 			const csvData = fs.readFileSync(test.dummyFile, 'utf8');
 			const wikipediaDummyData = Papa.parse(csvData, {
@@ -75,7 +82,7 @@ TESTS.forEach(test => {
 		it(`compare to expected data`, () => {
 			const result = compute(dummyTimeToEvent, dummyEvents);
 			const resultRatesRounded = result.map(
-				(r: KaplanMeierEsimatorResult) => Math.round(r.rate * test.accuracy) / test.accuracy
+				(r: KaplanMeierEstimatorResult) => Math.round(r.rate * test.accuracy) / test.accuracy
 			);
 			const dummyRateRounded = dummyRate.map(
 				rate => Math.round(rate * test.accuracy) / test.accuracy
@@ -89,7 +96,7 @@ TESTS.forEach(test => {
 				dummyTimeToEvent,
 				dummyEvents
 			);
-			const resultKaplanMeierLib: KaplanMeierEsimatorResult[] = kaplanData.map(
+			const resultKaplanMeierLib: KaplanMeierEstimatorResult[] = kaplanData.map(
 				(r: KaplanMeierData) => ({
 					rate: r.s,
 					time: r.t,

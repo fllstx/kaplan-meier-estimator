@@ -1,6 +1,6 @@
 import { groupBy, sortBy, uniq } from './helpers';
 
-export interface KaplanMeierEsimatorResult {
+export interface KaplanMeierEstimatorResult {
 	rate: number;
 	time: number;
 	event: boolean;
@@ -78,9 +78,9 @@ function timeTable(tte: number[], ev: boolean[]): TimeTableData[] {
  * @export
  * @param {number[]} ttes time to exit (event or censor).
  * @param {boolean[]} events is truthy if there is an event.
- * @returns {KaplanMeierEsimatorResult[]}
+ * @returns {KaplanMeierEstimatorResult[]}
  */
-export function compute(ttes: number[], events: boolean[]): KaplanMeierEsimatorResult[] {
+export function compute(ttes: number[], events: boolean[]): KaplanMeierEstimatorResult[] {
 	if (ttes.length !== events.length) {
 		throw new Error('[kaplan-meier-esimator]: events and censors must be of same length');
 	}
