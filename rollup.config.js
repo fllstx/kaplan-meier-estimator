@@ -1,7 +1,7 @@
 import typescript from 'rollup-plugin-typescript2';
 import terser from '@rollup/plugin-terser';
 
-import packageJson from './package.json' assert { type: "json" };
+import packageJson from './package.json' assert { type: 'json' };
 
 const DEPENDENCIES = {
 	...packageJson.devDependencies,

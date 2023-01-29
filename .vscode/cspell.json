@@ -1,15 +1,5 @@
 {
 	"language": "en-GB",
-	"ignorePaths": [
-		".vscode",
-		"**/*.json"
-	],
-	"words": [
-		"Goel",
-		"jstat",
-		"Khanna",
-		"Kishore",
-		"papaparse",
-		"Schätzer"
-	]
+	"ignorePaths": [".vscode", "**/*.json"],
+	"words": ["Goel", "jstat", "Khanna", "Kishore", "papaparse", "Schätzer"]
 }
