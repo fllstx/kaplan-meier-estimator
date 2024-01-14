@@ -7,7 +7,7 @@ A JavaScript implementation of the [Kaplan-Meier-Estimator](https://en.wikipedia
 ### node
 
 ```sh
-npm install --save kaplan-meier-estimator
+npm install --save @fullstax/kaplan-meier-estimator
 ```
 
 ### Browser
